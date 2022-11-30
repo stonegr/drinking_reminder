@@ -1,7 +1,7 @@
 name: Release Python Project
 
 # on: [push]
-# on: 
+on: 
 #   push:
 #     # branches:
 #     #   -main
