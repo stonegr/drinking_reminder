@@ -73,7 +73,7 @@ jobs:
       
       - name: Build
         run: |
-          pyinstaller -F -w -i static/ico/1.ico maneger.py
+          pyinstaller -F -w -i static/ico/1.ico app.py
 
       - name: Package
         working-directory: ./dist
