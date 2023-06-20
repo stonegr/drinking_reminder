@@ -87,7 +87,7 @@ jobs:
         run: |
           pwd
           ls -h
-          tar -zcvf ${{ env.NAME }}-${{ matrix.os }}.tar.gz *.exe
+          tar -zcvf ${{ env.NAME }}-${{ matrix.os }}-${{ job.release.outputs.date }}.tar.gz *.exe
           ls -h
 
       - name: Upload assets
