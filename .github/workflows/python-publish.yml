@@ -9,7 +9,7 @@ on:
       - main
 
 env:
-  Name: drinking_remainder
+  NAME: drinking_remainder
 
 jobs:
   release:
