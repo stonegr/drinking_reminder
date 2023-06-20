@@ -32,8 +32,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ env.Name }}-${{ steps.date.outputs.today }}-${{ github.run_id }}
-          release_name: ${{ env.Name }}-${{ steps.date.outputs.today }}-${{ github.run_id }}
+          tag_name: ${{ env.NAME }}-${{ steps.date.outputs.today }}-${{ github.run_id }}
+          release_name: ${{ env.NAME }}-${{ steps.date.outputs.today }}-${{ github.run_id }}
           draft: false
           prerelease: false
       
@@ -87,7 +87,7 @@ jobs:
         run: |
           pwd
           ls -h
-          tar -zcvf ${{ env.Name }}-${{ matrix.os }}.tar.gz *.exe
+          tar -zcvf ${{ env.NAME }}-${{ matrix.os }}.tar.gz *.exe
           ls -h
 
       - name: Upload assets
@@ -97,6 +97,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.release.outputs.upload_url }}
-          asset_path: ./dist/${{ env.Name }}-${{ matrix.os }}-${{ jobs.release.outputs.date }}.tar.gz
-          asset_name: ${{ env.Name }}-${{ matrix.os }}-${{ jobs.release.outputs.date }}.tar.gz
+          asset_path: ./dist/${{ env.NAME }}-${{ matrix.os }}-${{ jobs.release.outputs.date }}.tar.gz
+          asset_name: ${{ env.NAME }}-${{ matrix.os }}-${{ jobs.release.outputs.date }}.tar.gz
           asset_content_type: application/gzip
