@@ -16,8 +16,9 @@ jobs:
   release:
     name: Create Release
     runs-on: ubuntu-latest
-    outputs: 
-      upload_url: ${{ steps.create_release.outputs.upload_url }}
+    # outputs: 
+    #   upload_url: ${{ steps.create_release.outputs.upload_url }}
+    run: echo "upload_url=${{ steps.create_release.outputs.upload_url }}" >> "$GITHUB_ENV"
     
     steps:
       
