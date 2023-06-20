@@ -26,7 +26,7 @@ while True:
     if not message_status:
         show_message()
     else:
-        sleep_time = Config_do.get_self(["interval"], 0.1)
+        sleep_time = Config_do.get_self(["interval"], 30)
         print("休眠: {} 分钟".format(sleep_time))
         time.sleep(sleep_time * 60)
         message_status = False
