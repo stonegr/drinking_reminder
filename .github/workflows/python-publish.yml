@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     # outputs: 
     #   upload_url: ${{ steps.create_release.outputs.upload_url }}
-    run: echo "upload_url=${{ steps.create_release.outputs.upload_url }}" >> "$GITHUB_ENV"
+    # run: echo "upload_url=${{ steps.create_release.outputs.upload_url }}" >> "$GITHUB_ENV"
     
     steps:
       
@@ -37,6 +37,7 @@ jobs:
           release_name: ${{ env.NAME }}-${{ env.TODAY }}-${{ github.run_id }}
           draft: false
           prerelease: false
+        run: echo "upload_url=${{ upload_url }}" >> "$GITHUB_ENV"
       
       
   build:
