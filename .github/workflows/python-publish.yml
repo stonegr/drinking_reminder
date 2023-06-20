@@ -10,7 +10,6 @@ on:
 
 env:
   NAME: drinking_remainder
-  TODAY: $(date +'%Y-%m-%d')
 
 jobs:
   release:
