@@ -97,7 +97,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ needs.release.outputs.upload_url }}
+          upload_url: ${{ env.upload_url }}
           asset_path: ./dist/${{ env.NAME }}-${{ matrix.os }}-${{env.TODAY}}.tar.gz
           asset_name: ${{ env.NAME }}-${{ matrix.os }}-${{env.TODAY}}.tar.gz
           asset_content_type: application/gzip
