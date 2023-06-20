@@ -9,37 +9,36 @@ on:
       - main
 
 env:
-  NAME: drinking_remainder
-  TODAY: $(date +'%Y-%m-%d')
+  Name: drinking_remainder
 
 jobs:
   release:
-    name: Create_Release
+    name: Create Release
     runs-on: ubuntu-latest
     outputs: 
       upload_url: ${{ steps.create_release.outputs.upload_url }}
+      date: ${{ steps.date.outputs.today }}
     
     steps:
       
-      - name: Get_current_date
-        # id: date
-        # run: echo "::set-output name=today::$(date +'%Y-%m-%d')"
-        run: echo "TODAY=$(date +'%Y-%m-%d')" >> "$GITHUB_ENV"
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=today::$(date +'%Y-%m-%d')"
 
-      - name: Create_Release
+      - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ env.NAME }}-${{ env.TODAY }}-${{ github.run_id }}
-          release_name: ${{ env.NAME }}-${{ env.TODAY }}-${{ github.run_id }}
+          tag_name: ${{ env.Name }}-${{ steps.date.outputs.today }}-${{ github.run_id }}
+          release_name: ${{ env.Name }}-${{ steps.date.outputs.today }}-${{ github.run_id }}
           draft: false
           prerelease: false
       
       
   build:
-    name: Build_environment
+    name: Build environment
     runs-on: ${{ matrix.os }}
     needs: release
     strategy:
@@ -58,7 +57,7 @@ jobs:
         #     npm: 6
 
     steps:
-      - name: Set_up_Python 3.x
+      - name: Set up Python 3.x
         uses: actions/setup-python@v4
         with:
           # Semantic version range syntax or exact version of a Python version
@@ -67,12 +66,12 @@ jobs:
           architecture: 'x64'
       
 
-      - name: get_code
+      - name: get code
         uses: actions/checkout@v3
         # with:
         #   path: dirname
 
-      - name: Install_dependencies
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           # pip install -r requirements.txt
@@ -87,16 +86,16 @@ jobs:
         run: |
           pwd
           ls -h
-          tar -zcvf ${{ env.NAME }}-${{ matrix.os }}.tar.gz *.exe
+          tar -zcvf ${{ env.Name }}-${{ matrix.os }}.tar.gz *.exe
           ls -h
 
-      - name: Upload_assets
+      - name: Upload assets
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ env.upload_url }}
-          asset_path: ./dist/${{ env.NAME }}-${{ matrix.os }}-${{env.TODAY}}.tar.gz
-          asset_name: ${{ env.NAME }}-${{ matrix.os }}-${{env.TODAY}}.tar.gz
+          upload_url: ${{ needs.release.outputs.upload_url }}
+          asset_path: ./dist/${{ env.Name }}-${{ matrix.os }}-{jobs.release.outputs.date}.tar.gz
+          asset_name: ${{ env.Name }}-${{ matrix.os }}.tar.gz
           asset_content_type: application/gzip
